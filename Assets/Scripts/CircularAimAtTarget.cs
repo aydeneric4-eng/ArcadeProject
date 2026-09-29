@@ -4,13 +4,13 @@ using UnityEngine.InputSystem;
 
 public class CircularAimAtTarget : MonoBehaviour
 {
-    [SerializeField] Transform parentTransform;
-    [SerializeField] bool isTargetMouse;
+    [SerializeField] bool isTargetMouse = false;
     [SerializeField] Transform targetTransform;
     [SerializeField] bool rotateTowardsTarget;
-    [SerializeField] bool moveTowardsTarget;
-    [SerializeField] float maxMoveDistance;
-    [SerializeField] float minMoveDistance;
+
+    [SerializeField] Transform orbitParentTransform;
+    [SerializeField] bool orbitTowardsTarget;
+    [SerializeField] float orbitDistance = 0.1f;
 
     private Transform selfTransform;
     private Vector2 targetPosition;
@@ -25,10 +25,10 @@ public class CircularAimAtTarget : MonoBehaviour
         if (isTargetMouse)
         {
             if (Mouse.current != null)
-            {
+            { //Ai
                 Vector2 screenPosition = Mouse.current.position.ReadValue();
                 Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
-                worldPosition.z = 0f;
+                worldPosition.z = 0f; //Ai
                 targetPosition = worldPosition;
             }
         }
@@ -37,22 +37,16 @@ public class CircularAimAtTarget : MonoBehaviour
             targetPosition = (Vector2)targetTransform.position;
         }
         Vector2 selfPos = (Vector2)selfTransform.position;
-        float angleToTarget = GetAngle2Vects(parentTransform.position, targetPosition);
+        float angleToTarget = CustomUtilities.GetAngleOf2DVect(orbitParentTransform.position, targetPosition);
 
         if (rotateTowardsTarget)
         {
             transform.eulerAngles = new Vector3(0,0,angleToTarget);
         }
-        if (moveTowardsTarget)
+        if (orbitTowardsTarget)
         {
-            selfTransform.position = parentTransform.position + new Vector3(Mathf.Cos(angleToTarget * Mathf.Deg2Rad) * maxMoveDistance, Mathf.Sin(angleToTarget*Mathf.Deg2Rad)*maxMoveDistance, 0);
+            selfTransform.position = orbitParentTransform.position + new Vector3(Mathf.Cos(angleToTarget * Mathf.Deg2Rad) * orbitDistance, Mathf.Sin(angleToTarget*Mathf.Deg2Rad)*orbitDistance, 0);
         }
 
-    }
-
-    private float GetAngle2Vects(Vector2 startPos, Vector2 targetPos)
-    {
-        Vector2 directonVect = targetPosition - startPos;
-        return Mathf.Atan2(directonVect.y, directonVect.x) * Mathf.Rad2Deg;
     }
 }
