@@ -1,5 +1,6 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CircularAimAtTarget : MonoBehaviour
 {
@@ -23,7 +24,13 @@ public class CircularAimAtTarget : MonoBehaviour
     {
         if (isTargetMouse)
         {
-            Debug.LogWarning("MOUSE NOT IMPLIMENTED");
+            if (Mouse.current != null)
+            {
+                Vector2 screenPosition = Mouse.current.position.ReadValue();
+                Vector3 worldPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+                worldPosition.z = 0f;
+                targetPosition = worldPosition;
+            }
         }
         else
         {
@@ -38,7 +45,6 @@ public class CircularAimAtTarget : MonoBehaviour
         }
         if (moveTowardsTarget)
         {
-            //selfTransform.position = parentTransform.position - targetTransform.position;
             selfTransform.position = parentTransform.position + new Vector3(Mathf.Cos(angleToTarget * Mathf.Deg2Rad) * maxMoveDistance, Mathf.Sin(angleToTarget*Mathf.Deg2Rad)*maxMoveDistance, 0);
         }
 

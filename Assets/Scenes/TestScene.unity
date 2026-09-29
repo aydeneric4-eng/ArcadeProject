@@ -200,11 +200,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CircularAimAtTarget
   parentTransform: {fileID: 1328729855}
-  isTargetMouse: 0
+  isTargetMouse: 1
   targetTransform: {fileID: 1668102856}
   rotateTowardsTarget: 0
   moveTowardsTarget: 1
-  maxMoveDistance: 1
+  maxMoveDistance: 0.1
   minMoveDistance: 0
 --- !u!212 &706344145
 SpriteRenderer:
