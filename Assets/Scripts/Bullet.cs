@@ -22,13 +22,13 @@ public class Bullet : MonoBehaviour, IHasTeam
 
     private void FixedUpdate()
     {
-        RaycastHit2D hitData = Physics2D.Linecast(selfTransform.position, selfTransform.position + new Vector3(moveSpeed * Time.fixedDeltaTime, 0, 0));
+        RaycastHit2D hitData = Physics2D.Linecast(selfTransform.position, selfTransform.position + selfTransform.TransformDirection(new Vector3(moveSpeed * Time.fixedDeltaTime, 0, 0)));
         if (hitData)
         {
             handleCollision(hitData.transform.gameObject);
         }
 
-        selfTransform.position += new Vector3(moveSpeed * Time.fixedDeltaTime, 0, 0);
+        selfTransform.position += selfTransform.TransformDirection(new Vector3(moveSpeed * Time.fixedDeltaTime, 0, 0));
     }
 
     private void handleCollision(GameObject collidedObject)

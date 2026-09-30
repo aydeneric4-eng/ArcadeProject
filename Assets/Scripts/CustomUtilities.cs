@@ -23,4 +23,16 @@ public static class CustomUtilities
         Vector2 directonVect = targetPos - startPos; //Ai
         return Mathf.Atan2(directonVect.y, directonVect.x) * Mathf.Rad2Deg; //Ai
     }
+    public static bool HasTimeElapsed(float startTime, float requiredTime)
+    {
+        if (Time.time - startTime > requiredTime)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
