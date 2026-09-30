@@ -1,8 +1,14 @@
 using TMPro;
 using UnityEngine;
 
-public class CustomUtilities : MonoBehaviour
+public static class CustomUtilities
 {
+    public enum PlayerTeams
+    {
+        Player,
+        Enemy
+    }
+
     public static Vector2 Vec2ToVec3(Vector2 vect2, float zValue = 0)
     {
         return new Vector3(vect2.x, vect2.y, zValue);
