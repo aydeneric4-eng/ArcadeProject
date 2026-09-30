@@ -107,4 +107,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   playerTeam: 0
   moveSpeed: 8
-  damage: 111
+  damage: 20

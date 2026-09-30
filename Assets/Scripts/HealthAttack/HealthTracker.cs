@@ -1,6 +1,7 @@
 using UnityEngine;
 using static CustomUtilities;
 
+[RequireComponent(typeof(DeathHandler))]
 public class HealthTracker : MonoBehaviour, IDamagable, IHasTeam
 {
     [SerializeField] PlayerTeams playerTeam = PlayerTeams.Player;
@@ -11,11 +12,13 @@ public class HealthTracker : MonoBehaviour, IDamagable, IHasTeam
     }
 
     [SerializeField] float maxHealth = 100;
+    private DeathHandler deathHandler;
     private float currentHealth;
 
     private void Awake()
     {
         currentHealth = maxHealth;
+        deathHandler = GetComponent<DeathHandler>();
     }
 
     public void Damage(float damage)
@@ -24,7 +27,7 @@ public class HealthTracker : MonoBehaviour, IDamagable, IHasTeam
         if (currentHealth < 0)
         {
             currentHealth = 0;
-            Debug.Log("Im ded lol");
+            deathHandler.KillThisObject();
         }
     }
 }

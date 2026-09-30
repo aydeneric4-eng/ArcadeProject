@@ -42,6 +42,5 @@ public class Bullet : MonoBehaviour, IHasTeam
             damageHandler.Damage(damage);
         }
         Destroy(gameObject);
-        Destroy(this);
     }
 }

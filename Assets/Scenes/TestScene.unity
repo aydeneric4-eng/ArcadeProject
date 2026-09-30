@@ -694,6 +694,7 @@ GameObject:
   - component: {fileID: 1238870614}
   - component: {fileID: 1238870615}
   - component: {fileID: 1238870616}
+  - component: {fileID: 1238870617}
   m_Layer: 0
   m_Name: Enemy Melee
   m_TagString: Untagged
@@ -855,6 +856,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthTracker
   playerTeam: 1
   maxHealth: 100
+--- !u!114 &1238870617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238870611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f108213af09f6cb4a9e9235637799ce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DeathHandler
+  disablerExceptions: []
 --- !u!1 &1328729853
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,6 +886,7 @@ GameObject:
   - component: {fileID: 1328729860}
   - component: {fileID: 1328729861}
   - component: {fileID: 1328729862}
+  - component: {fileID: 1328729863}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1001,7 +1016,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1328729862}
         m_TargetAssemblyTypeName: PlayerShooter, Assembly-CSharp
-        m_MethodName: ShootBullet
+        m_MethodName: ShootInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1122,7 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   muzzleTransform: {fileID: 1983238843}
   bulletPrefab: {fileID: 8773045771504193552, guid: 4d12dcbe49b8c6e40be547d0b4b48242, type: 3}
-  rateOfFire: 0.2
+  rateOfFire: 0.25
 --- !u!114 &1328729862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,6 +1150,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 467b702d772825c46ac45d701f74bafe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &1328729863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328729853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f108213af09f6cb4a9e9235637799ce6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  disablerExceptions: []
 --- !u!1 &1354499157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1963,10 +1991,6 @@ PrefabInstance:
     - target: {fileID: 6175332214713372561, guid: 4d12dcbe49b8c6e40be547d0b4b48242, type: 3}
       propertyPath: m_Name
       value: Player Bullet
-      objectReference: {fileID: 0}
-    - target: {fileID: 8773045771504193552, guid: 4d12dcbe49b8c6e40be547d0b4b48242, type: 3}
-      propertyPath: damage
-      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
