@@ -34,9 +34,9 @@ public class OrbitParentAndAimAtTarget : MonoBehaviour
         }
         else
         {
-            targetPosition = (Vector2)targetTransform.position;
+            targetPosition = CustomUtilities.Vec3ToVec2(targetTransform.position);
         }
-        Vector2 selfPos = (Vector2)selfTransform.position;
+        Vector2 selfPos = CustomUtilities.Vec3ToVec2(selfTransform.position);
         float angleToTarget = CustomUtilities.GetAngleOf2DVect(orbitParentTransform.position, targetPosition);
 
         if (rotateTowardsTarget)
