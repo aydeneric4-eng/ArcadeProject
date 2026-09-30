@@ -2,7 +2,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CircularAimAtTarget : MonoBehaviour
+public class OrbitParentAndAimAtTarget : MonoBehaviour
 {
     [SerializeField] bool isTargetMouse = false;
     [SerializeField] Transform targetTransform;
