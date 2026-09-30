@@ -691,7 +691,7 @@ GameObject:
   - component: {fileID: 1238870613}
   - component: {fileID: 1238870612}
   m_Layer: 0
-  m_Name: Enemy Melee-1.png_0
+  m_Name: Enemy Melee
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -864,7 +864,7 @@ Transform:
   m_GameObject: {fileID: 1328729853}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.94305, y: 1.43861, z: 0}
+  m_LocalPosition: {x: -4.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1149,7 +1149,7 @@ GameObject:
   - component: {fileID: 1510037315}
   - component: {fileID: 1510037316}
   m_Layer: 0
-  m_Name: Enemy Melee-2.png_0
+  m_Name: Spinning Spikes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1330,7 +1330,7 @@ Transform:
   m_GameObject: {fileID: 1668102854}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.95305, y: -1.122, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.2331, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1505,7 +1505,7 @@ GameObject:
   - component: {fileID: 1952658706}
   - component: {fileID: 1952658705}
   m_Layer: 0
-  m_Name: Enemy Melee-3.png_0
+  m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
