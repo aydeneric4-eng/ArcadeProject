@@ -695,6 +695,7 @@ GameObject:
   - component: {fileID: 1238870615}
   - component: {fileID: 1238870616}
   - component: {fileID: 1238870617}
+  - component: {fileID: 1238870618}
   m_Layer: 0
   m_Name: Enemy Melee
   m_TagString: Untagged
@@ -841,7 +842,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1238870616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -869,6 +870,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DeathHandler
   disablerExceptions: []
+--- !u!114 &1238870618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238870611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4409f7e1db9450149909a155e3f71d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  damage: 0
+  attackKnockback: 0
+  selfKnockback: 0
 --- !u!1 &1328729853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1045,7 +1061,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2bc10574c9545643bcdc290be1dc3cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  moveSpeed: 5.5
+  maxMoveSpeed: 5
+  acceleration: 5
+  deacceleration: 3
+  overspeedDeacceleration: 5
 --- !u!58 &1328729858
 CircleCollider2D:
   m_ObjectHideFlags: 0

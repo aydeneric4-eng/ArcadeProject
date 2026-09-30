@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,12 +6,16 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float maxMoveSpeed = 5f;
+    [SerializeField] float acceleration = 2.5f;
+    [SerializeField] float deacceleration = 3f;
+    [SerializeField] float overspeedDeacceleration = 5f;
 
     private Transform selfTransform;
     private Rigidbody2D selfRigidBody;
 
     private Vector3 inputMovementVector = Vector3.zero;
+    private Vector3 velocity = Vector3.zero;
 
     private void Awake()
     {
@@ -18,13 +23,19 @@ public class PlayerMovement : MonoBehaviour
         selfRigidBody = GetComponent<Rigidbody2D>();
     }
 
+    private float GetAccType()
+    {
+        if (velocity.magnitude > maxMoveSpeed)
+            return deacceleration;
+        else
+            return acceleration;
+    }
     private void FixedUpdate()
     {
-        selfRigidBody.linearVelocity = inputMovementVector * moveSpeed;
-        //selfTransform.position += inputMovementVector * moveSpeed * Time.deltaTime;
+        selfRigidBody.AddForce(inputMovementVector * maxMoveSpeed);
     }
     public void Move(InputAction.CallbackContext ctx)
     {
-        inputMovementVector = (Vector3)ctx.ReadValue<Vector2>();
+        inputMovementVector = CustomUtilities.Vec2ToVec3(ctx.ReadValue<Vector2>());
     }
 }
