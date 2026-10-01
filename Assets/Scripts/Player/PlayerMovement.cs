@@ -33,12 +33,14 @@ public class PlayerMovement : MonoBehaviour
     
     private float GetNewVelocityValue(float current,float input) // UGLY!!!!
     {
-        Debug.Log(input);
         float inputSign = Mathf.Sign(input);
         float currentSign = Mathf.Sign(current);
 
         float absInput = Mathf.Abs(input);
         float absCurrent = Mathf.Abs(current);
+
+        float clampMax = maxMoveSpeed;
+        float clampMin = 0;
 
         float modifyingValue = 0f;
         float modifySign = 1f;
@@ -49,25 +51,51 @@ public class PlayerMovement : MonoBehaviour
         if (current == 0 && input == 0)
             return 0f;
 
+
         if (absCurrent > maxMoveSpeed)
-            { modifyingValue = overspeedDeacceleration; modifySign = -1f; }
-        else if (inputSign == currentSign && input != 0)
-            { modifyingValue = acceleration; modifySign = 1f; }
-        else
-            { modifyingValue = deacceleration; modifySign = -1f; }
+        {
+            modifyingValue = overspeedDeacceleration;
+            modifySign = -1f;
+            clampMax = overspeedDeacceleration + maxMoveSpeed;
+        }
+        else if ((inputSign == currentSign || current == 0) && input != 0)
+        {
+            modifyingValue = acceleration;
+            modifySign = 1f;
+        }
+        else if (inputSign != currentSign && acceleration > deacceleration && input != 0)
+        {
+            modifyingValue = acceleration;
+            modifySign = -1f;
+        }
+        else if (input == 0)
+        {
+            modifyingValue = deacceleration;
+            modifySign = -1f;
+        }
+        //if (absCurrent > maxMoveSpeed)
+        //    { modifyingValue = overspeedDeacceleration; modifySign = -1f; }
+        //else if (inputSign == currentSign && input != 0)
+        //    { modifyingValue = acceleration; modifySign = 1f; }
+        //else if (input != 0 && inputSign != currentSign && acceleration > deacceleration)
+        //    { modifyingValue = acceleration; modifySign = -1f; }
+        //else
+        //    { modifyingValue = deacceleration; modifySign = -1f; }
 
         if (input != 0 && inputSign != currentSign && absCurrent < modifyingValue) // No input + moving opp of current + change greater than current
             finalSign = -currentSign;
         else
             finalSign = currentSign;
 
-        finalValue = Mathf.Max(Mathf.Min(absCurrent + modifyingValue * modifySign, maxMoveSpeed),0) * finalSign;
+        finalValue = CustomUtilities.AbsMax(CustomUtilities.AbsMin(absCurrent + modifyingValue * modifySign, clampMax), clampMin) * finalSign;
 
-
-        Debug.Log("signs:");
-        Debug.Log(input);
-        Debug.Log(inputSign);
-        Debug.Log(currentSign);
+        //Debug.Log("signs:");
+        //Debug.Log(input);
+        //Debug.Log(inputSign);
+        //Debug.Log(currentSign);
+        Debug.Log("clamps:");
+        Debug.Log(clampMax);
+        Debug.Log(clampMin);
         Debug.Log("mod:");
         Debug.Log(modifyingValue);
         Debug.Log(modifySign);

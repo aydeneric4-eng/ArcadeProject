@@ -1063,7 +1063,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   maxMoveSpeed: 10
   acceleration: 2.5
-  deacceleration: 1
+  deacceleration: 0.5
   overspeedDeacceleration: 5
 --- !u!58 &1328729858
 CircleCollider2D:
