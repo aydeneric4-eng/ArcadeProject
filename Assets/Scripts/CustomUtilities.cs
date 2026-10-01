@@ -44,5 +44,25 @@ public static class CustomUtilities
         else
             return -1;
     }
-
+    public static float IsDesiredSign(float value, float desiredSign, float fallBack = 0)
+    {
+        if (Mathf.Sign(value) != desiredSign)
+            return fallBack;
+        else
+            return value;
+    }
+    public static float AbsMin(float a, float b)
+    {
+        if (Mathf.Abs(a) == Mathf.Min(Mathf.Abs(a), Mathf.Abs(b)))
+            return a;
+        else
+            return b;
+    }
+    public static float AbsMax(float a, float b)
+    {
+        if (Mathf.Abs(a) == Mathf.Max(Mathf.Abs(a), Mathf.Abs(b)))
+            return a;
+        else
+            return b;
+    }
 }
