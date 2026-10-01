@@ -34,6 +34,7 @@ public class RBMovement : MonoBehaviour
         float finalValue = 0f;
         float finalSign = 1f;
 
+
         if (current == 0 && input == 0)
             return 0f;
 
@@ -82,9 +83,16 @@ public class RBMovement : MonoBehaviour
         return finalValue;
     }
 
+    public void AddImpulse(Vector3 impulse)
+    {
+        velocity += impulse;
+    }
+
     private void FixedUpdate()
     {
         velocity = new Vector3(GetNewVelocityValue(velocity.x, inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);//new Vector3(GetNewVelocityValue(velocity.x,inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);
+
+        velocity = velocity.normalized * velocity.magnitude;
 
         selfRigidBody.linearVelocity = velocity;
 
