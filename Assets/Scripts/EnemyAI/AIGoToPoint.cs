@@ -27,7 +27,7 @@ public class AIGoToPoint : MonoBehaviour
         }
         if (active)
         {
-            Vector3 inputVect = (Vector3)CustomUtilities.GetVectorByAngleAndDistance(1, CustomUtilities.GetAngleOf2DVect((Vector2)selfTransform.position, (Vector2)targetTransform.position));
+            Vector3 inputVect = (Vector3)CustomUtilities.GetVectorByAngleAndDistance(1, CustomUtilities.GetAngleOf2DVect((Vector2)selfTransform.position, (Vector2)targetTransform.position) + Random.Range(-variance,variance));
             Debug.Log(inputVect);
             selfRBM.inputMovementVector = inputVect;
         }
