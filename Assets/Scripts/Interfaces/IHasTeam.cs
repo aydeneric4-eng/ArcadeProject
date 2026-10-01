@@ -1,6 +1,10 @@
 using UnityEngine;
-using static CustomUtilities;
 
+public enum PlayerTeams
+{
+    Player,
+    Enemy
+}
 public interface IHasTeam
 {
     PlayerTeams PlayerTeam { get; set; }

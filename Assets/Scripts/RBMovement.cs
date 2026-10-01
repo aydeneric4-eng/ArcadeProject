@@ -4,6 +4,7 @@ using UnityEngine;
 public class RBMovement : MonoBehaviour
 {
     [SerializeField] float maxMoveSpeed = 5f;
+    [SerializeField] float maxOverspeed = 100f;
     [SerializeField] float acceleration = 2.5f;
     [SerializeField] float deacceleration = 1f;
     [SerializeField] float overspeedDeacceleration = 5f;
@@ -40,9 +41,10 @@ public class RBMovement : MonoBehaviour
 
         if (absCurrent > maxMoveSpeed)
         {
+            Debug.Log("OVERSPEED");
             modifyingValue = overspeedDeacceleration;
             modifySign = -1f;
-            clampMax = overspeedDeacceleration + maxMoveSpeed;
+            clampMax = maxOverspeed;
         }
         else if ((inputSign == currentSign || current == 0) && input != 0)
         {

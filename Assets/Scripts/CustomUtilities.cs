@@ -3,12 +3,6 @@ using UnityEngine;
 
 public static class CustomUtilities
 {
-    public enum PlayerTeams
-    {
-        Player,
-        Enemy
-    }
-
     public static Vector2 Vec2ToVec3(Vector2 vect2, float zValue = 0)
     {
         return new Vector3(vect2.x, vect2.y, zValue);
@@ -17,12 +11,16 @@ public static class CustomUtilities
     {
         return new Vector2(vect3.x, vect3.y);
     }
-
     public static float GetAngleOf2DVect(Vector2 startPos, Vector2 targetPos)
     {
         Vector2 directonVect = targetPos - startPos; //Ai
         return Mathf.Atan2(directonVect.y, directonVect.x) * Mathf.Rad2Deg; //Ai
     }
+    public static Vector3 GetVectorByAngleAndDistance(float distance, float angle)
+    {
+        return new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * distance, Mathf.Sin(angle * Mathf.Deg2Rad) * distance, 0);
+    }
+
     public static bool HasTimeElapsed(float startTime, float requiredTime)
     {
         if (Time.time - startTime > requiredTime)

@@ -1,5 +1,4 @@
 using UnityEngine;
-using static CustomUtilities;
 
 [RequireComponent(typeof(DeathHandler))]
 public class HealthTracker : MonoBehaviour, IDamagable, IHasTeam

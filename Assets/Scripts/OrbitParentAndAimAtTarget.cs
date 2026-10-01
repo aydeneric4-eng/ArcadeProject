@@ -45,7 +45,7 @@ public class OrbitParentAndAimAtTarget : MonoBehaviour
         }
         if (orbitTowardsTarget)
         {
-            selfTransform.position = orbitParentTransform.position + new Vector3(Mathf.Cos(angleToTarget * Mathf.Deg2Rad) * orbitDistance, Mathf.Sin(angleToTarget*Mathf.Deg2Rad)*orbitDistance, 0);
+            selfTransform.position = orbitParentTransform.position + CustomUtilities.GetVectorByAngleAndDistance(orbitDistance,angleToTarget);
         }
 
     }
