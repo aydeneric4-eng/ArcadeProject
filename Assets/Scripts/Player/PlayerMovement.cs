@@ -51,7 +51,6 @@ public class PlayerMovement : MonoBehaviour
         if (current == 0 && input == 0)
             return 0f;
 
-
         if (absCurrent > maxMoveSpeed)
         {
             modifyingValue = overspeedDeacceleration;
@@ -63,85 +62,43 @@ public class PlayerMovement : MonoBehaviour
             modifyingValue = acceleration;
             modifySign = 1f;
         }
-        else if (inputSign != currentSign && acceleration > deacceleration && input != 0)
+        else if (inputSign != currentSign && current != 0 && acceleration > deacceleration && input != 0)
         {
             modifyingValue = acceleration;
             modifySign = -1f;
         }
-        else if (input == 0)
+        else if (input == 0 && current != 0)
         {
             modifyingValue = deacceleration;
             modifySign = -1f;
         }
-        //if (absCurrent > maxMoveSpeed)
-        //    { modifyingValue = overspeedDeacceleration; modifySign = -1f; }
-        //else if (inputSign == currentSign && input != 0)
-        //    { modifyingValue = acceleration; modifySign = 1f; }
-        //else if (input != 0 && inputSign != currentSign && acceleration > deacceleration)
-        //    { modifyingValue = acceleration; modifySign = -1f; }
-        //else
-        //    { modifyingValue = deacceleration; modifySign = -1f; }
 
         if (input != 0 && inputSign != currentSign && absCurrent < modifyingValue) // No input + moving opp of current + change greater than current
             finalSign = -currentSign;
         else
             finalSign = currentSign;
 
-        finalValue = CustomUtilities.AbsMax(CustomUtilities.AbsMin(absCurrent + modifyingValue * modifySign, clampMax), clampMin) * finalSign;
+        finalValue = Mathf.Max(Mathf.Min(absCurrent + modifyingValue * modifySign, clampMax), clampMin) * finalSign;
 
         //Debug.Log("signs:");
         //Debug.Log(input);
         //Debug.Log(inputSign);
         //Debug.Log(currentSign);
-        Debug.Log("clamps:");
-        Debug.Log(clampMax);
-        Debug.Log(clampMin);
-        Debug.Log("mod:");
-        Debug.Log(modifyingValue);
-        Debug.Log(modifySign);
-        Debug.Log("finalValue");
-        Debug.Log(finalValue);
-        Debug.Log(finalSign);
+        //Debug.Log("clamps:");
+        //Debug.Log(clampMax);
+        //Debug.Log(clampMin);
+        //Debug.Log("mod:");
+        //Debug.Log(modifyingValue);
+        //Debug.Log(modifySign);
+        //Debug.Log("finalValue");
+        //Debug.Log(finalValue);
+        //Debug.Log(finalSign);
         return finalValue;
-
-        if (input != 0) // There is an input
-        {
-            if (inputSign == currentSign || current == 0) // We are going in the direction of movement
-            {
-                if (Mathf.Abs(current) <= maxMoveSpeed)
-                {
-                    Debug.Log("There is input, moving in direction of vel, underspeed");
-                    return CustomUtilities.AbsMin(current + acceleration * currentSign, maxMoveSpeed); // Under speed limit
-                } else
-                {
-                    Debug.Log("There is input, moving in direction of vel, overspeed");
-                    return CustomUtilities.AbsMax(current - overspeedDeacceleration * currentSign, maxMoveSpeed); // Over speed limit
-                }
-            } else
-            {
-                Debug.Log("There is input, moving away from direction of vel");
-                return current - Mathf.Max(acceleration, deacceleration) * currentSign; // Going against speed
-            }
-        }
-
-        if (current == 0) // No input + already stropped
-            return 0f;
-
-        if (Mathf.Abs(current) <= maxMoveSpeed) // No Input
-        {
-            Debug.Log("There is no input, underspeed");
-            return CustomUtilities.IsDesiredSign(current - deacceleration * currentSign, currentSign); // Not Overspeed
-        }
-        else
-        {
-            Debug.Log("There is no input, overspeed");
-            return CustomUtilities.IsDesiredSign(current - overspeedDeacceleration * currentSign, currentSign); // Overspeed
-        }
     }
 
     private void FixedUpdate()
     {
-        velocity = new Vector3(GetNewVelocityValue(velocity.x, inputMovementVector.x), 0,0);//new Vector3(GetNewVelocityValue(velocity.x,inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);
+        velocity = new Vector3(GetNewVelocityValue(velocity.x, inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);//new Vector3(GetNewVelocityValue(velocity.x,inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);
 
         selfRigidBody.linearVelocity = velocity;
 
