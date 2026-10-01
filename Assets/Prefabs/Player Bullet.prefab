@@ -108,3 +108,5 @@ MonoBehaviour:
   playerTeam: 0
   moveSpeed: 15
   damage: 50
+  giveKnockback: 1
+  knockbackPower: 10
