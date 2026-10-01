@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class RBMovement : MonoBehaviour
+public class RBMovement : MonoBehaviour, IReceivesKnockback
 {
     [SerializeField] float maxMoveSpeed = 5f;
     [SerializeField] float maxOverspeed = 100f;
@@ -41,7 +41,6 @@ public class RBMovement : MonoBehaviour
 
         if (absCurrent > maxMoveSpeed)
         {
-            Debug.Log("OVERSPEED");
             modifyingValue = overspeedDeacceleration;
             modifySign = -1f;
             clampMax = maxOverspeed;
@@ -85,7 +84,7 @@ public class RBMovement : MonoBehaviour
         return finalValue;
     }
 
-    public void AddImpulse(Vector3 impulse)
+    public void ReceiveKnockback(Vector3 impulse)
     {
         velocity += impulse;
     }

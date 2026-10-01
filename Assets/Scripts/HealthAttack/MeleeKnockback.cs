@@ -35,11 +35,11 @@ public class MeleeKnockback : MonoBehaviour
 
         if (colliderHasRBMovement)
         {
-            colliderRBMovement.AddImpulse(-collisionAverageNormal * knockbackPower);
+            colliderRBMovement.ReceiveKnockback(-collisionAverageNormal * knockbackPower);
         }
         if (selfRBMovement != null && (colliderHasRBMovement || allwaysGiveSelfKnockback))
         {
-            selfRBMovement.AddImpulse(collisionAverageNormal * selfKnockbackPower);
+            selfRBMovement.ReceiveKnockback(collisionAverageNormal * selfKnockbackPower);
         }
     }
 }

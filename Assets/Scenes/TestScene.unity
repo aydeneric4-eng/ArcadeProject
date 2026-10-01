@@ -697,6 +697,7 @@ GameObject:
   - component: {fileID: 1238870616}
   - component: {fileID: 1238870617}
   - component: {fileID: 1238870618}
+  - component: {fileID: 1238870619}
   m_Layer: 0
   m_Name: Enemy Melee
   m_TagString: Untagged
@@ -886,6 +887,24 @@ MonoBehaviour:
   damage: 0
   attackKnockback: 0
   selfKnockback: 0
+--- !u!114 &1238870619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1238870611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae76d5a3d47eef842bdccc55b0d45fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RBMovement
+  maxMoveSpeed: 5
+  maxOverspeed: 100
+  acceleration: 1
+  deacceleration: 0.8
+  overspeedDeacceleration: 5
+  inputMovementVector: {x: 0, y: 0, z: 0}
 --- !u!1 &1328729853
 GameObject:
   m_ObjectHideFlags: 0
@@ -1193,6 +1212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   maxMoveSpeed: 8
+  maxOverspeed: 100
   acceleration: 1.5
   deacceleration: 0.5
   overspeedDeacceleration: 5
@@ -1351,6 +1371,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   knockbackPower: 50
   selfKnockbackPower: 50
+  allwaysGiveSelfKnockback: 0
 --- !u!1 &1354499157
 GameObject:
   m_ObjectHideFlags: 0
