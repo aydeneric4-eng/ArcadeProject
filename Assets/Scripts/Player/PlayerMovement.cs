@@ -45,41 +45,65 @@ public class PlayerMovement : MonoBehaviour
         else
             return value;
     }
+    private float AbsMin(float a, float b)
+    {
+        if (Mathf.Abs(a) == Mathf.Min(Mathf.Abs(a), Mathf.Abs(b)))
+            return a;
+        else
+            return b;
+    }
+    private float AbsMax(float a, float b)
+    {
+        if (Mathf.Abs(a) == Mathf.Max(Mathf.Abs(a), Mathf.Abs(b)))
+            return a;
+        else
+            return b;
+    }
     private float GetNewVelocityValue(float current,float input) // UGLY!!!!
     {
+        float inputSign = Mathf.Sign(input);
+        float currentSign = Mathf.Sign(current);
         if (input != 0) // There is an input
         {
-            if (Mathf.Sign(input) == Mathf.Sign(current) || current == 0) // We are going in the direction of movement
+            if (inputSign == currentSign || current == 0) // We are going in the direction of movement
             {
-                if (current < maxMoveSpeed)
+                if (Mathf.Abs(current) <= maxMoveSpeed)
                 {
-                    return Mathf.Min(current + acceleration * input, maxMoveSpeed); // Under speed limit
+                    Debug.Log("There is input, moving in direction of vel, underspeed");
+                    return 0f; // Under speed limit
                 } else
                 {
-                    return Mathf.Max(IsDesiredSign(current - overspeedDeacceleration * Mathf.Sign(current), Mathf.Sign(overspeedDeacceleration * Mathf.Sign(current))), maxMoveSpeed); // Over speed limit
+                    Debug.Log("There is input, moving in direction of vel, overspeed");
+                    return 0f; // Over speed limit
                 }
             } else
             {
-                return Mathf.Max(IsDesiredSign(current - Mathf.Max(acceleration,deacceleration) * Mathf.Sign(current), Mathf.Sign(Mathf.Max(acceleration, deacceleration) * Mathf.Sign(current))) * input, maxMoveSpeed); // Going against speed
+                Debug.Log("There is input, moving away from direction of vel");
+                return 0f; // Going against speed
             }
         }
 
-        if (current < maxMoveSpeed) // No Input
+        if (current == 0) // No input + already stropped
+            return 0f;
+
+        if (Mathf.Abs(current) <= maxMoveSpeed) // No Input
         {
-            return IsDesiredSign(current - deacceleration * Mathf.Sign(current), Mathf.Sign(deacceleration * Mathf.Sign(current))); // Not Overspeed
+            Debug.Log("There is no input, underspeed");
+            return 0f; // Not Overspeed
         }
         else
         {
-            return IsDesiredSign(current - overspeedDeacceleration * Mathf.Sign(current), Mathf.Sign(overspeedDeacceleration * Mathf.Sign(current))); // Overspeed
+            Debug.Log("There is no input, overspeed");
+            return 0f; // Overspeed
         }
     }
 
     private void FixedUpdate()
     {
-        Vector3 newVelocity = new Vector3(GetNewVelocityValue(velocity.x,inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);
+        velocity = new Vector3(GetNewVelocityValue(velocity.x, inputMovementVector.x), 0,0);//new Vector3(GetNewVelocityValue(velocity.x,inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);
 
-        selfRigidBody.linearVelocity = newVelocity;
-        Debug.Log(newVelocity);
+        selfRigidBody.linearVelocity = velocity;
+        //Debug.Log(newVelocity);
     }
 
 
