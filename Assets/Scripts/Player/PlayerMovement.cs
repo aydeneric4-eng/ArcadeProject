@@ -30,8 +30,21 @@ public class PlayerMovement : MonoBehaviour
         else
             return acceleration;
     }
+
+    private float GetNewVelocityValue(float current,float input)
+    {
+        if (input != 0)
+        {
+            if (true) { }
+        }
+
+        return 0f;
+    }
+
     private void FixedUpdate()
     {
+        Vector3 newVelocity = new Vector3(velocity.x, velocity.y, 0);
+
         selfRigidBody.AddForce(inputMovementVector * maxMoveSpeed);
     }
     public void Move(InputAction.CallbackContext ctx)
