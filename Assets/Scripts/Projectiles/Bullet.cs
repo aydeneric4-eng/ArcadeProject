@@ -12,6 +12,8 @@ public class Bullet : MonoBehaviour, IHasTeam
 
     [SerializeField] float moveSpeed = 8f;
     [SerializeField] float damage = 50f;
+    [SerializeField] bool giveKnockback = true;
+    [SerializeField] float knockbackPower = 20f;
 
     private Transform selfTransform;
 
@@ -25,14 +27,21 @@ public class Bullet : MonoBehaviour, IHasTeam
         RaycastHit2D hitData = Physics2D.Linecast(selfTransform.position, selfTransform.position + selfTransform.TransformDirection(new Vector3(moveSpeed * Time.fixedDeltaTime, 0, 0)));
         if (hitData)
         {
-            handleCollision(hitData.transform.gameObject);
+            handleCollision(hitData);
         }
 
         selfTransform.position += selfTransform.TransformDirection(new Vector3(moveSpeed * Time.fixedDeltaTime, 0, 0));
     }
 
-    private void handleCollision(GameObject collidedObject)
+    private void handleCollision(RaycastHit2D hitData)
     {
+        GameObject collidedObject = hitData.collider.gameObject;
+
+        if (collidedObject.TryGetComponent<IReceivesKnockback>(out IReceivesKnockback KBReceiver) && giveKnockback)
+        {
+            KBReceiver.ReceiveKnockback(-hitData.normal * knockbackPower);
+        }
+
         if (collidedObject.TryGetComponent<IDamagable>(out IDamagable damageHandler))
         {
             if (damageHandler is IHasTeam team && team.PlayerTeam == playerTeam)

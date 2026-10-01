@@ -84,13 +84,17 @@ public class RBMovement : MonoBehaviour, IReceivesKnockback
         return finalValue;
     }
 
+    private Vector3 queuedKB = Vector3.zero;
     public void ReceiveKnockback(Vector3 impulse)
     {
-        velocity += impulse;
+        queuedKB += impulse;
     }
 
     private void FixedUpdate()
     {
+        velocity += queuedKB;
+        queuedKB = Vector3.zero;
+
         velocity = new Vector3(GetNewVelocityValue(velocity.x, inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);//new Vector3(GetNewVelocityValue(velocity.x,inputMovementVector.x), GetNewVelocityValue(velocity.y, inputMovementVector.y), 0);
 
         velocity = velocity.normalized * velocity.magnitude;

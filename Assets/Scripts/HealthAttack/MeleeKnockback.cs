@@ -3,43 +3,18 @@ using UnityEngine.Assertions.Must;
 using UnityEngine.InputSystem.XR.Haptics;
 
 [RequireComponent(typeof(Collider2D))]
-public class MeleeKnockback : MonoBehaviour
+public class MeleeKnockback : MonoBehaviour, IGivesKnockback
 {
-    [SerializeField] float knockbackPower = 50f;
-    [SerializeField] float selfKnockbackPower = 50f;
-    [SerializeField] bool allwaysGiveSelfKnockback = false;
+    [SerializeField] float knockbackPower = 30f;
 
-    private Transform selfTransform;
-    private RBMovement selfRBMovement;
-
-    private void Awake()
-    {
-        selfRBMovement = GetComponent<RBMovement>();
-        selfTransform = GetComponent<Transform>();
-    }
-
-    private Vector2 collisionAverageNormal;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        bool colliderHasRBMovement = collision.collider.gameObject.TryGetComponent<RBMovement>(out RBMovement colliderRBMovement);
+        bool colliderCanReceiveKnockback = collision.collider.gameObject.TryGetComponent<IReceivesKnockback>(out IReceivesKnockback colliderKBReceiver);
 
-        if (!colliderHasRBMovement && !(selfRBMovement != null && (colliderHasRBMovement || allwaysGiveSelfKnockback)))
+        if (!colliderCanReceiveKnockback)
             return;
 
-        collisionAverageNormal = Vector2.zero;
-        foreach (ContactPoint2D contact in collision.contacts)
-        {
-            collisionAverageNormal += contact.normal;
-        }
-        collisionAverageNormal = collisionAverageNormal / collision.contactCount;
-
-        if (colliderHasRBMovement)
-        {
-            colliderRBMovement.ReceiveKnockback(-collisionAverageNormal * knockbackPower);
-        }
-        if (selfRBMovement != null && (colliderHasRBMovement || allwaysGiveSelfKnockback))
-        {
-            selfRBMovement.ReceiveKnockback(collisionAverageNormal * selfKnockbackPower);
-        }
+        Vector2 collisionAverageNormal = CustomUtilities.GetAverageCollisionNormal(collision);
+        colliderKBReceiver.ReceiveKnockback(-collisionAverageNormal * knockbackPower);
     }
 }

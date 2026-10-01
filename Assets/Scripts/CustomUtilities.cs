@@ -21,6 +21,17 @@ public static class CustomUtilities
         return new Vector3(Mathf.Cos(angle * Mathf.Deg2Rad) * distance, Mathf.Sin(angle * Mathf.Deg2Rad) * distance, 0);
     }
 
+    private static Vector2 collisionAverageNormal;
+    public static Vector3 GetAverageCollisionNormal(Collision2D collision)
+    {
+        collisionAverageNormal = Vector2.zero;
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            collisionAverageNormal += contact.normal;
+        }
+        return collisionAverageNormal / collision.contactCount;
+    }
+
     public static bool HasTimeElapsed(float startTime, float requiredTime)
     {
         if (Time.time - startTime > requiredTime)
