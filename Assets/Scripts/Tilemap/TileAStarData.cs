@@ -2,7 +2,8 @@ using UnityEngine;
 
 public class TileAStarData : ITileData
 {
-    public AStarNode parentNode;
+    public Vector3Int selfPos;
+    public TileAStarData parentTile;
     public float gScore;
     public float hScore;
 

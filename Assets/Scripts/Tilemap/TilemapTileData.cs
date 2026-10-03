@@ -1,13 +1,21 @@
+using NUnit.Framework;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
 
+[RequireComponent(typeof(Tilemap))]
 public class TilemapTileData : MonoBehaviour
 {
-    public Dictionary<Vector3Int, ITileData> tilemapData = new Dictionary<Vector3Int, ITileData>();
-    [SerializeField] Tilemap targetTilemap;
+    public Dictionary<Vector3Int, TileAStarData> tilemapData = new Dictionary<Vector3Int, TileAStarData>();
+    private Tilemap selfTilemap;
+
+    private void Awake()
+    {
+        selfTilemap = GetComponent<Tilemap>();
+    }
 
     private void Start()
     {
@@ -16,24 +24,26 @@ public class TilemapTileData : MonoBehaviour
 
     public void GenerateNewTileDataset()
     {
-        tilemapData = new Dictionary<Vector3Int, ITileData>();
+        tilemapData = new Dictionary<Vector3Int, TileAStarData>();
 
-        BoundsInt bounds = targetTilemap.cellBounds;
+        BoundsInt bounds = selfTilemap.cellBounds;
         for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
             for (int y = bounds.yMin; y < bounds.yMax; y++)
             {
                 Vector3Int pos = new Vector3Int(x, y, 0);
-                if (targetTilemap.GetTile(pos) == null)
+                if (selfTilemap.GetTile(pos) == null)
                 {
                     continue;
                 }
-                tilemapData.Add(pos, new TileAStarData());
+                TileAStarData tileData = new TileAStarData();
+                tileData.selfPos = pos;
+                tilemapData.Add(pos, tileData);
             }
         }
     }
 
-    public ITileData GetTileData(Vector3Int tilePosition)
+    public TileAStarData GetTileData(Vector3Int tilePosition)
     {
         if (tilemapData.ContainsKey(tilePosition))
             return tilemapData[tilePosition];
@@ -41,7 +51,7 @@ public class TilemapTileData : MonoBehaviour
             return null;
     }
 
-    public void SetTileData(ITileData data, Vector3Int key)
+    public void SetTileData(TileAStarData data, Vector3Int key)
     {
         if (tilemapData.ContainsKey(key))
             tilemapData[key] = data;
