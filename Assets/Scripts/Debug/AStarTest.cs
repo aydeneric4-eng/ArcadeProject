@@ -18,7 +18,7 @@ public class AStarTest : MonoBehaviour
     {
         if (!(count < framesPerRequest) && fire)
         {
-            fire = false;
+            //fire = false;
             RequestAStarPath();
             count = 0;
         }
@@ -34,8 +34,8 @@ public class AStarTest : MonoBehaviour
         {
             Debug.Log("GOT NULL PATH");
         }
-        Debug.Log("path:");
-        Debug.Log(path);
+        //Debug.Log("path:");
+        //Debug.Log(path);
     }
 
     private void OnDrawGizmos()
@@ -47,10 +47,21 @@ public class AStarTest : MonoBehaviour
 
         Gizmos.color = Color.red;
 
-        for (int i = 1; i <= path.Count; i++)
+        for (int i = 1; i < path.Count; i++)
         {
-            Debug.Log(i);
-            //Gizmos.DrawLine(path[i - 1], path[i]);
+            //Debug.Log("DrawL");
+            //Debug.Log(i);
+            //Debug.Log(path.Count);
+
+            if (i < 0 || i > path.Count)
+            {
+                Debug.LogWarning("wtf i ???");
+                return;
+            }
+            //Debug.Log("DRAW COORDS");
+            //Debug.Log(path[i]);
+            //Debug.Log(path[i - 1]);
+            Gizmos.DrawLine(path[i - 1], path[i]);
         }
     }
 }

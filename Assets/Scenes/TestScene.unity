@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 5156266}
   - component: {fileID: 5156265}
   m_Layer: 0
-  m_Name: Circle (2)
+  m_Name: Circle Red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -205,7 +205,7 @@ Transform:
   m_GameObject: {fileID: 5156264}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.73, y: -2.4, z: 0}
+  m_LocalPosition: {x: -10.64, y: 2.72, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -261,7 +261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &173928722
 Transform:
   m_ObjectHideFlags: 0
@@ -4860,7 +4860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &391853222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4873,10 +4873,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f26976569f1c2b8428bb7ec5df200a22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AStarTest
-  manager: {fileID: 0}
-  startTransform: {fileID: 0}
-  targetTransform: {fileID: 0}
+  manager: {fileID: 173928725}
+  startTransform: {fileID: 1790511705}
+  targetTransform: {fileID: 5156266}
   path: []
+  framesPerRequest: 50
 --- !u!4 &391853223
 Transform:
   m_ObjectHideFlags: 0
@@ -16535,7 +16536,7 @@ GameObject:
   - component: {fileID: 1790511705}
   - component: {fileID: 1790511704}
   m_Layer: 0
-  m_Name: Circle (1)
+  m_Name: Circle Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16610,7 +16611,7 @@ Transform:
   m_GameObject: {fileID: 1790511703}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.590001, y: -3.98, z: 0}
+  m_LocalPosition: {x: -2.16, y: -4.23, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

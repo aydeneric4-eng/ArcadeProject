@@ -34,21 +34,23 @@ public class AStarManager : MonoBehaviour
 
     public List<Vector3> GetPath(Vector3 startPos, Vector3 targetPos)
     {
-        return null;
+        //Debug.Log(selfTilemap);
+        //Debug.Log(selfTilemap.WorldToCell(targetPos));
+        //return null;
         TileAStarData startTile = selfTileData.GetTileData(selfTilemap.WorldToCell(startPos));
         TileAStarData targetTile = selfTileData.GetTileData(selfTilemap.WorldToCell(targetPos));
-
+        //return null;
         if (startTile == null || targetTile == null)
         {
-            Debug.LogWarning("Failed to get start/target tile");
-            Debug.Log(startPos);
-            Debug.Log(startTile);
-            Debug.Log(targetPos);
-            Debug.Log(targetTile);
-            Debug.Log("#####");
+            //Debug.LogWarning("Failed to get start/target tile");
+            //Debug.Log(startPos);
+            //Debug.Log(startTile);
+            //Debug.Log(targetPos);
+            //Debug.Log(targetTile);
+            //Debug.Log("#####");
             return null;
         }
-
+        
         List<TileAStarData> openTiles = new List<TileAStarData>();
         List<TileAStarData> closedTiles = new List<TileAStarData>();
 
@@ -62,8 +64,14 @@ public class AStarManager : MonoBehaviour
         openTiles.Add(startTile);
         while (!foundPath && currentStep < maxSteps)
         {
-            // Sort nodes
-            openTiles = openTiles.OrderByDescending(t => t.FScore()).ToList();
+            //Debug.Log("Step:");
+            //Debug.Log(currentStep);
+            //Debug.Log("closedTiles.Count");
+            //Debug.Log(closedTiles.Count);
+            //Debug.Log("openTiles.Count");
+            //Debug.Log(openTiles.Count);
+            //Debug.Log(openTiles[0].selfPos);
+            openTiles = openTiles.OrderBy(t => t.FScore()).ToList();
             currentTile = openTiles[0];
             openTiles.RemoveAt(0);
             closedTiles.Add(currentTile);
@@ -72,48 +80,67 @@ public class AStarManager : MonoBehaviour
             {
                 foundPath = true;
             }
-
-            for (int x = startTile.selfPos.x - 1; x <= startTile.selfPos.x + 1; x++)
+            //Debug.Log("Checking neighbors");
+            for (int x = currentTile.selfPos.x - 1; x <= currentTile.selfPos.x + 1; x++)
             {
-                for (int y = startTile.selfPos.y - 1; y <= startTile.selfPos.y + 1; y++)
+                for (int y = currentTile.selfPos.y - 1; y <= currentTile.selfPos.y + 1; y++)
                 {
-                    if (x == startTile.selfPos.x && y == startTile.selfPos.y)
+                    //Debug.Log(new Vector2(x, y));
+                    if (x == currentTile.selfPos.x && y == currentTile.selfPos.y)
                         continue;
                     TileAStarData neighborTile = selfTileData.GetTileData(new Vector3Int(x, y, 0));
                     if (neighborTile == null || closedTiles.Contains(neighborTile))
                         continue;
 
-                    if (!openTiles.Contains(neighborTile) || neighborTile.gScore < GetDistanceScore(neighborTile, startTile, currentTile.gScore))
+                    if (!openTiles.Contains(neighborTile) || neighborTile.gScore > GetDistanceScore(neighborTile, startTile, currentTile.gScore))
                     {
                         SetTileCost(neighborTile, startTile, targetTile, currentTile.gScore);
                         neighborTile.parentTile = currentTile;
                         if (!openTiles.Contains(neighborTile))
+                        {
                             openTiles.Add(neighborTile);
+                            //Debug.Log("add neighbor");
+                        }
                     }
                 }
             }
             currentStep++;
         }
 
-        if (currentStep < maxSteps)
+        if (currentStep >= maxSteps)
         {
-            Debug.LogWarning("FAILED TO FIND PATH");
+            //Debug.LogWarning("FAILED TO FIND PATH");
+            //Debug.Log(currentStep);
             return null;
         }
-        
+
+        currentStep = 0;
         bool madePath = false;
         TileAStarData current = targetTile;
-        while (!madePath)
+        while (currentStep < maxSteps)
         {
-            finalPath.Add((Vector3)current.selfPos);
+            finalPath.Add(selfTilemap.CellToWorld(current.selfPos) + selfTilemap.cellSize / 2);
             if (current == startTile)
+            {
                 madePath = true;
+                break;
+            }
+               
             if (current.parentTile == null)
             {
-                Debug.LogWarning("ERROR in generating path");
+                //Debug.LogWarning("ERROR in generating path");
+                //Debug.Log(current.selfPos);
+                //Debug.Log(startTile.selfPos);
+                //Debug.Log(targetTile.selfPos);
                 return null;
             }
             current = current.parentTile;
+            currentStep++;
+        }
+        if (!madePath)
+        {
+            //Debug.Log("Couldnt make path in time");
+            return null;
         }
 
         
