@@ -2,5 +2,12 @@ using UnityEngine;
 
 public class TileAStarData : ITileData
 {
-    public float hScore = 0f;
+    public AStarNode parentNode;
+    public float gScore;
+    public float hScore;
+
+    public float FScore()
+    {
+        return gScore + hScore;
+    }
 }
