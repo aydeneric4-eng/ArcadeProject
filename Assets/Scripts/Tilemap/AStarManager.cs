@@ -34,8 +34,21 @@ public class AStarManager : MonoBehaviour
 
     public List<Vector3> GetPath(Vector3 startPos, Vector3 targetPos)
     {
+        return null;
         TileAStarData startTile = selfTileData.GetTileData(selfTilemap.WorldToCell(startPos));
         TileAStarData targetTile = selfTileData.GetTileData(selfTilemap.WorldToCell(targetPos));
+
+        if (startTile == null || targetTile == null)
+        {
+            Debug.LogWarning("Failed to get start/target tile");
+            Debug.Log(startPos);
+            Debug.Log(startTile);
+            Debug.Log(targetPos);
+            Debug.Log(targetTile);
+            Debug.Log("#####");
+            return null;
+        }
+
         List<TileAStarData> openTiles = new List<TileAStarData>();
         List<TileAStarData> closedTiles = new List<TileAStarData>();
 
@@ -92,9 +105,14 @@ public class AStarManager : MonoBehaviour
         TileAStarData current = targetTile;
         while (!madePath)
         {
-            finalPath.Add(current.selfPos);
+            finalPath.Add((Vector3)current.selfPos);
             if (current == startTile)
                 madePath = true;
+            if (current.parentTile == null)
+            {
+                Debug.LogWarning("ERROR in generating path");
+                return null;
+            }
             current = current.parentTile;
         }
 
